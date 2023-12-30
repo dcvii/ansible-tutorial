@@ -1,0 +1,1 @@
+ansible-playbook ./playbooks/timezone.yml --user sixo -i ./inventory/ansible_hosts 

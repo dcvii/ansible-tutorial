@@ -1,0 +1,28 @@
+- name: Set timezone and configure timesyncd
+  hosts: "*"
+  become: true
+  tasks:
+    - name: set timezone
+      shell: timedatectl set-timezone America/Los_Angeles
+
+    - name: stop timesyncd
+      service:
+        name: systemd-timesyncd
+        state: stopped
+        enabled: no
+
+    - name: copy timesyncd.conf
+      copy:
+        src: files/timesyncd.conf
+        dest: /etc/systemd/timesyncd.conf
+        owner: root
+        group: root
+        mode: 0644
+
+    - name: start timesyncd
+      service:
+        name: systemd-timesyncd
+        state: started
+        enabled: yes
+    
+
